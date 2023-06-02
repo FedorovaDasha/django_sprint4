@@ -56,7 +56,7 @@ class PostDetailView(DetailView):
         return context
 
 
-class PostChangeMixin:
+class PostChangeMixin(LoginRequiredMixin):
     model = Post
     template_name = 'blog/create.html'
     form_class = PostForm
@@ -68,11 +68,11 @@ class PostChangeMixin:
         return super().dispatch(request, *args, **kwargs)
 
 
-class PostUpdateView(LoginRequiredMixin, PostChangeMixin, UpdateView):
+class PostUpdateView(PostChangeMixin, UpdateView):
     pass
 
 
-class PostDeleteView(LoginRequiredMixin, PostChangeMixin, DeleteView):
+class PostDeleteView(PostChangeMixin, DeleteView):
 
     def get_success_url(self):
         return reverse(
@@ -132,7 +132,7 @@ def edit_profile(request):
     return render(request, 'blog/user.html', context)
 
 
-class CommentMixin:
+class CommentMixin(LoginRequiredMixin):
     model = Comment
     form_class = CommentForm
     template_name = 'blog/comment.html'
@@ -166,9 +166,9 @@ class CommentCreateView(LoginRequiredMixin, CreateView):
         return reverse('blog:post_detail', kwargs={'pk': self.kwargs['pk']})
 
 
-class CommentUpdateView(LoginRequiredMixin, CommentMixin, UpdateView):
+class CommentUpdateView(CommentMixin, UpdateView):
     pass
 
 
-class CommentDeleteView(LoginRequiredMixin, CommentMixin, DeleteView):
+class CommentDeleteView(CommentMixin, DeleteView):
     pass
