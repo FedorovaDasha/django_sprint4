@@ -41,6 +41,7 @@ class Post(BaseModel):
         verbose_name='Дата и время публикации',
         help_text='Если установить дату и время в будущем'
         ' — можно делать отложенные публикации.',
+        default=timezone.now
     )
     image = models.ImageField('Фото', upload_to='post_images', blank=True)
     author = models.ForeignKey(
@@ -62,9 +63,6 @@ class Post(BaseModel):
     objects = models.Manager()
     published = PublishedManager()
 
-    def get_absolute_url(self):
-        return reverse('blog:post_detail', kwargs={'pk': self.pk})
-
     class Meta:
         verbose_name = 'публикация'
         verbose_name_plural = 'Публикации'
@@ -72,6 +70,9 @@ class Post(BaseModel):
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse('blog:post_detail', kwargs={'pk': self.pk})
 
 
 class Category(BaseModel):
@@ -114,4 +115,9 @@ class Comment(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
 
     class Meta:
+        verbose_name = 'Комментарий'
+        verbose_name_plural = 'Комментарии'
         ordering = ('created_at',)
+
+    def __str__(self):
+        return self.text
