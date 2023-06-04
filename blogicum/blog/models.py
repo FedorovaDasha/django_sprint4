@@ -41,7 +41,7 @@ class Post(BaseModel):
         verbose_name='Дата и время публикации',
         help_text='Если установить дату и время в будущем'
         ' — можно делать отложенные публикации.',
-        default=timezone.now()
+        default=timezone.now(),
     )
     image = models.ImageField('Фото', upload_to='post_images', blank=True)
     author = models.ForeignKey(

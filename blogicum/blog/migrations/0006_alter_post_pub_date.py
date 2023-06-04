@@ -6,7 +6,6 @@ from django.utils.timezone import utc
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ('blog', '0005_auto_20230602_2258'),
     ]
@@ -15,6 +14,12 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='post',
             name='pub_date',
-            field=models.DateTimeField(default=datetime.datetime(2023, 6, 2, 20, 15, 31, 109943, tzinfo=utc), help_text='Если установить дату и время в будущем — можно делать отложенные публикации.', verbose_name='Дата и время публикации'),
+            field=models.DateTimeField(
+                default=datetime.datetime(
+                    2023, 6, 2, 20, 15, 31, 109943, tzinfo=utc
+                ),
+                help_text='Если установить дату и время в будущем — можно делать отложенные публикации.',
+                verbose_name='Дата и время публикации',
+            ),
         ),
     ]
